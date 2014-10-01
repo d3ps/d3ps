@@ -19,7 +19,7 @@ module.exports = function (grunt) {
         dest: 'dist/',
         replacements: [{
           from: '%root%',
-          to: '/d3ps'
+          to: ''
         }]
       }
     },

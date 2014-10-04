@@ -1,15 +1,8 @@
 /** @jsx React.DOM */
 
-function p(n) {
-  return (+n).toLocaleString();
-}
-
-function pr(n) {
-  return p(Math.round(+n));
-}
-
 var Panel = require('./panel'),
-    FormGroup = require('./form-group');
+    FormGroup = require('./form-group'),
+    FormControlStatic = require('./form-control-static');
 
 var CharacterStats = React.createClass({
   render: function () {
@@ -38,13 +31,13 @@ var CharacterStats = React.createClass({
             <input type="text" id="eliteDamage" value={this.props.eliteDamage} className="form-control" />
           </FormGroup>
           <FormGroup label="Sheet Damage">
-            <p className="form-control-static" title={'Exact: ' + p(this.props.sheetDamage)}>{pr(this.props.sheetDamage)}</p>
+            <FormControlStatic value={this.props.sheetDamage} />
           </FormGroup>
           <FormGroup label="&times; Elemental">
-            <p className="form-control-static" title={'Exact: ' + p(this.props.sheetElementalDamage)}>{pr(this.props.sheetElementalDamage)}</p>
+            <FormControlStatic value={this.props.sheetElementalDamage} />
           </FormGroup>
           <FormGroup label="&times; Elite">
-            <p className="form-control-static" title={'Exact: ' + p(this.props.eliteElementalDamage)}>{pr(this.props.eliteElementalDamage)}</p>
+            <FormControlStatic value={this.props.sheetElementalDamage} />
           </FormGroup>
         </Panel>
       </div>

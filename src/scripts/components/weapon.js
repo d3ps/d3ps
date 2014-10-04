@@ -1,15 +1,8 @@
 /** @jsx React.DOM */
 
-function p(n) {
-  return (+n).toLocaleString();
-}
-
-function pr(n) {
-  return p((+n).toFixed(1));
-}
-
 var Panel = require('./panel'),
-    FormGroup = require('./form-group');
+    FormGroup = require('./form-group'),
+    FormControlStatic = require('./form-control-static');
 
 var Weapon = React.createClass({
   render: function () {
@@ -26,7 +19,7 @@ var Weapon = React.createClass({
             <input type="text" id={'weapon' + this.props.number + 'AttacksPerSecond'} value={this.props.attacksPerSecond} className="form-control" />
           </FormGroup>
           <FormGroup label="Damage per Second">
-            <p className="form-control-static" title={'Exact: ' + p(this.props.dps)}>{pr(this.props.dps)}</p>
+            <FormControlStatic value={this.props.dps} precision="1" />
           </FormGroup>
         </Panel>
       </div>

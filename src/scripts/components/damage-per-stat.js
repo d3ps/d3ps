@@ -38,9 +38,9 @@ var DamagePerStat = React.createClass({
             <Definition value={attackSpeed - sheetDamage} />
             <dt>Passive Damage</dt>
             <Definition value={passiveDamage - sheetDamage} />
-            <dt>Elemental Damage</dt>
+            <dt>&times; Elemental</dt>
             <Definition value={elementalDamage - sheetElementalDamage} />
-            <dt>Elite Ele. Damage</dt>
+            <dt>&times; Elite</dt>
             <Definition value={eliteDamage - eliteElementalDamage} />
           </dl>
         </Panel>

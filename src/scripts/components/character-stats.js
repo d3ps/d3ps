@@ -12,22 +12,22 @@ var CharacterStats = React.createClass({
           <FormGroup for="primaryAttribute" label="Primary Attribute">
             <input type="text" id="primaryAttribute" value={this.props.primaryAttribute} className="form-control" />
           </FormGroup>
-          <FormGroup for="attackSpeed" label="Attack Speed">
+          <FormGroup for="attackSpeed" label="Attack Speed" suffix="%">
             <input type="text" id="attackSpeed" value={this.props.attackSpeed} className="form-control" />
           </FormGroup>
-          <FormGroup for="critChance" label="Critical Hit Chance">
+          <FormGroup for="critChance" label="Critical Hit Chance" suffix="%">
             <input type="text" id="critChance" value={this.props.critChance} className="form-control" />
           </FormGroup>
-          <FormGroup for="critDamage" label="Critical Hit Damage">
+          <FormGroup for="critDamage" label="Critical Hit Damage" suffix="%">
             <input type="text" id="critDamage" value={this.props.critDamage} className="form-control" />
           </FormGroup>
-          <FormGroup for="passiveDamage" label="Passive Damage">
+          <FormGroup for="passiveDamage" label="Passive Damage" suffix="%">
             <input type="text" id="passiveDamage" value={this.props.passiveDamage} className="form-control" />
           </FormGroup>
-          <FormGroup for="elementalDamage" label="Elemental Damage">
+          <FormGroup for="elementalDamage" label="Elemental Damage" suffix="%">
             <input type="text" id="elementalDamage" value={this.props.elementalDamage} className="form-control" />
           </FormGroup>
-          <FormGroup for="eliteDamage" label="Elite Damage">
+          <FormGroup for="eliteDamage" label="Elite Damage" suffix="%">
             <input type="text" id="eliteDamage" value={this.props.eliteDamage} className="form-control" />
           </FormGroup>
           <FormGroup label="Sheet Damage">

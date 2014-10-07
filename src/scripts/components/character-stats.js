@@ -37,7 +37,7 @@ var CharacterStats = React.createClass({
             <FormControlStatic value={this.props.sheetElementalDamage} />
           </FormGroup>
           <FormGroup label="&times; Elite">
-            <FormControlStatic value={this.props.sheetElementalDamage} />
+            <FormControlStatic value={this.props.eliteElementalDamage} />
           </FormGroup>
         </Panel>
       </div>

@@ -4,6 +4,7 @@ var Header = require('./header'),
     Row = require('./row'),
     Weapon = require('./weapon'),
     CharacterStats = require('./character-stats'),
+    DamagePerStat = require('./damage-per-stat'),
     Character = require('../models/character');
 
 var Page = React.createClass({
@@ -45,6 +46,7 @@ var Page = React.createClass({
                 sheetDamage={c.sheetDamage}
                 sheetElementalDamage={c.sheetElementalDamage}
                 eliteElementalDamage={c.eliteElementalDamage} />
+            <DamagePerStat character={c} />
           </Row>
         </form>
       </div>

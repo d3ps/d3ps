@@ -16,11 +16,14 @@ var Character = (function () {
   };
 
 
-  function Character(state) {
+  function Character(state, stat, inc) {
     if (state) {
       Object.keys(state).forEach(function (key) {
         this[key] = state[key];
       }, this);
+    }
+    if (stat) {
+      this[stat] += inc || 1;
     }
   }
 

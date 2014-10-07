@@ -18,14 +18,34 @@ var Character = (function () {
 
   function Character(state, stat, inc) {
     if (state) {
-      Object.keys(state).forEach(function (key) {
-        this[key] = state[key];
-      }, this);
-    }
-    if (stat) {
-      this[stat] += inc || 1;
+      this.loadFromState(state);
+      if (stat) {
+        this[stat] += inc || 1;
+      }
+    } else {
+      if (localStorageSupport()) {
+        this.loadFromLocalStorage();
+      }
     }
   }
+
+
+  Character.prototype.loadFromState = function (state) {
+    Object.keys(state).forEach(function (key) {
+      this[key] = state[key];
+    }, this);
+  };
+
+  Character.prototype.loadFromLocalStorage = function () {
+    var character = localStorage['character'];
+    if (character) {
+      this.loadFromState(JSON.parse(character));
+    }
+  };
+
+  Character.prototype.saveToLocalStorage = function () {
+    localStorage['character'] = JSON.stringify(this);
+  };
 
 
   Object.keys(stats).forEach(function (key) {
@@ -40,6 +60,9 @@ var Character = (function () {
       },
       set: function (value) {
         this[field] = +value;
+        if (localStorageSupport()) {
+          this.saveToLocalStorage();
+        }
       }
     });
   });
@@ -97,6 +120,16 @@ var Character = (function () {
     }
   });
 
+
+  function localStorageSupport() {
+    try {
+      localStorage.setItem('x', 'x');
+      localStorage.removeItem('x');
+      return 'JSON' in window && 'parse' in JSON && 'stringify' in JSON;
+    } catch (e) {
+      return false;
+    }
+  }
 
   function dps(min, max, aps) {
     return aps * (min + max) / 2.0;

@@ -8,45 +8,36 @@ var Header = require('./header'),
     Character = require('../models/character');
 
 var Page = React.createClass({
-  getInitialState: function () {
-    return { character: new Character() };
-  },
-  handleChange: function (e) {
-    var character = new Character(this.state.character);
-    character[e.target.id] = e.target.value;
-    this.setState({ character: character });
-  },
   render: function () {
-    var c = this.state.character;
     return (
       <div className="container">
         <Header />
-        <form className="form-horizontal" onChange={this.handleChange}>
+        <form className="form-horizontal" onChange={this.props.handleChange}>
           <Row>
             <Weapon number="1"
-                minDamage={c.weapon1MinDamage}
-                maxDamage={c.weapon1MaxDamage}
-                attacksPerSecond={c.weapon1AttacksPerSecond}
-                dps={c.weapon1DPS} />
+                minDamage={this.props.weapon1MinDamage}
+                maxDamage={this.props.weapon1MaxDamage}
+                attacksPerSecond={this.props.weapon1AttacksPerSecond}
+                dps={this.props.weapon1DPS} />
             <Weapon number="2"
-                minDamage={c.weapon2MinDamage}
-                maxDamage={c.weapon2MaxDamage}
-                attacksPerSecond={c.weapon2AttacksPerSecond}
-                dps={c.weapon2DPS} />
+                minDamage={this.props.weapon2MinDamage}
+                maxDamage={this.props.weapon2MaxDamage}
+                attacksPerSecond={this.props.weapon2AttacksPerSecond}
+                dps={this.props.weapon2DPS} />
           </Row>
           <Row>
             <CharacterStats
-                primaryAttribute={c.primaryAttribute}
-                attackSpeed={c.attackSpeed}
-                critChance={c.critChance}
-                critDamage={c.critDamage}
-                passiveDamage={c.passiveDamage}
-                elementalDamage={c.elementalDamage}
-                eliteDamage={c.eliteDamage}
-                sheetDamage={c.sheetDamage}
-                sheetElementalDamage={c.sheetElementalDamage}
-                eliteElementalDamage={c.eliteElementalDamage} />
-            <DamagePerStat character={c} />
+                primaryAttribute={this.props.primaryAttribute}
+                attackSpeed={this.props.attackSpeed}
+                critChance={this.props.critChance}
+                critDamage={this.props.critDamage}
+                passiveDamage={this.props.passiveDamage}
+                elementalDamage={this.props.elementalDamage}
+                eliteDamage={this.props.eliteDamage}
+                sheetDamage={this.props.sheetDamage}
+                sheetElementalDamage={this.props.sheetElementalDamage}
+                eliteElementalDamage={this.props.eliteElementalDamage} />
+            <DamagePerStat />
           </Row>
         </form>
       </div>

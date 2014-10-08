@@ -1,68 +1,78 @@
 var Character = (function () {
-  var stats = {
-    weapon1MinDamage: 1343,
-    weapon1MaxDamage: 1841,
-    weapon1AttacksPerSecond: 1.47,
-    weapon2MinDamage: 1287,
-    weapon2MaxDamage: 1763,
-    weapon2AttacksPerSecond: 1.4,
-    primaryAttribute: 7490,
-    attackSpeed: 46.4,
-    critChance: 41.5,
-    critDamage: 423,
-    passiveDamage: 8,
-    elementalDamage: 54,
-    eliteDamage: 0
-  };
+  var DEFAULT_STATS = {
+        weapon1MinDamage: 1343,
+        weapon1MaxDamage: 1841,
+        weapon1AttacksPerSecond: 1.47,
+        weapon2MinDamage: 1287,
+        weapon2MaxDamage: 1763,
+        weapon2AttacksPerSecond: 1.4,
+        primaryAttribute: 7490,
+        attackSpeed: 46.4,
+        critChance: 41.5,
+        critDamage: 423,
+        passiveDamage: 8,
+        elementalDamage: 54,
+        eliteDamage: 0
+      },
+      PROPERTIES = [
+        'weapon1DPS',
+        'weapon2DPS',
+        'attacksPerSecond',
+        'sheetDamage',
+        'sheetElementalDamage',
+        'eliteElementalDamage'
+      ];
 
 
-  function Character(state, stat, inc) {
-    if (state) {
-      this.loadFromState(state);
-      if (stat) {
-        this[stat] += inc || 1;
-      }
-    } else {
-      if (localStorageSupport()) {
-        this.loadFromLocalStorage();
-      }
-    }
+  function Character(name, stats) {
+    this.name = name;
+    Object.keys(DEFAULT_STATS).forEach(function (stat) {
+      this['_' + stat] = stats['_' + stat];
+    }, this);
   }
 
 
-  Character.prototype.loadFromState = function (state) {
-    Object.keys(state).forEach(function (key) {
-      this[key] = state[key];
-    }, this);
+  Character.load = function (name) {
+    name = name || 'default';
+
+    var stats = DEFAULT_STATS;
+    if (localStorageSupport()) {
+      var saved = localStorage['character_' + name];
+      if (saved) {
+        stats = JSON.parse(saved);
+      }
+    }
+
+    return new Character(name, stats);
   };
 
-  Character.prototype.loadFromLocalStorage = function () {
-    var character = localStorage['character'];
-    if (character) {
-      this.loadFromState(JSON.parse(character));
+
+  Character.prototype.save = function () {
+    if (localStorageSupport()) {
+      localStorage['character_' + this.name] = JSON.stringify(this);
     }
   };
 
-  Character.prototype.saveToLocalStorage = function () {
-    localStorage['character'] = JSON.stringify(this);
+  Character.prototype.asStatic = function () {
+    var s = {};
+    Object.keys(DEFAULT_STATS).forEach(function (stat) {
+      s[stat] = this[stat];
+    }, this);
+    PROPERTIES.forEach(function (prop) {
+      s[prop] = this[prop];
+    }, this);
+    return s;
   };
 
 
-  Object.keys(stats).forEach(function (key) {
-    var field = '_' + key;
-    Object.defineProperty(Character.prototype, key, {
+  Object.keys(DEFAULT_STATS).forEach(function (stat) {
+    var field = '_' + stat;
+    Object.defineProperty(Character.prototype, stat, {
       get: function () {
-        if (field in this) {
-          return this[field];
-        } else {
-          return stats[key];
-        }
+        return this[field];
       },
       set: function (value) {
         this[field] = +value;
-        if (localStorageSupport()) {
-          this.saveToLocalStorage();
-        }
       }
     });
   });

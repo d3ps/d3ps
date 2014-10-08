@@ -6,42 +6,46 @@ var Panel = require('./panel'),
     Definition = require('./definition'),
     Character = require('../models/character');
 
+function incDiff(stat, result) {
+    result = result || 'sheetDamage';
+
+    var character = Character.load(),
+        before = character[result];
+    character['_' + stat] += 1;
+    return character[result] - before;
+}
+
 var DamagePerStat = React.createClass({
   render: function () {
-    var c = this.props.character,
-        sheetDamage = c.sheetDamage,
-        sheetElementalDamage = c.sheetElementalDamage,
-        eliteElementalDamage = c.eliteElementalDamage,
-        weaponDamage = new Character(c, 'weapon1MinDamage').sheetDamage,
-        primaryAttribute = new Character(c, 'primaryAttribute').sheetDamage,
-        critChance = new Character(c, 'critChance', 0.5).sheetDamage,
-        critDamage = new Character(c, 'critDamage').sheetDamage,
-        attackSpeed = new Character(c, 'attackSpeed').sheetDamage,
-        passiveDamage = new Character(c, 'passiveDamage').sheetDamage,
-        elementalDamage = new Character(c, 'elementalDamage').sheetElementalDamage,
-        eliteDamage = new Character(c, 'eliteDamage').eliteElementalDamage;
+    var weaponDamage = incDiff('weapon1MinDamage'),
+        primaryAttribute = incDiff('primaryAttribute'),
+        critChance = incDiff('critChance'),
+        critDamage = incDiff('critDamage'),
+        attackSpeed = incDiff('attackSpeed'),
+        passiveDamage = incDiff('passiveDamage'),
+        elementalDamage = incDiff('elementalDamage', 'sheetElementalDamage'),
+        eliteDamage = incDiff('eliteDamage', 'eliteElementalDamage');
     return (
       <div className="col-md-6">
         <Panel heading="Damage per Stat">
-          <p>Each number represents how much damage you will gain by increasing the specified stat by 1.</p>
-          <p>Critical Hit Chance damage is based on an increase of 0.5 instead of 1.</p>
+          <p>Each number represents how much damage you will gain by increasing the specified stat by 1 (or 1% for percentage based stats).</p>
           <dl className="dl-horizontal">
             <dt>Weapon Damage</dt>
-            <Definition value={weaponDamage - sheetDamage} />
+            <Definition value={weaponDamage} />
             <dt>Primary Attribute</dt>
-            <Definition value={primaryAttribute - sheetDamage} />
+            <Definition value={primaryAttribute} />
             <dt>Critical Hit Chance</dt>
-            <Definition value={critChance - sheetDamage} />
+            <Definition value={critChance} />
             <dt>Critical Hit Damage</dt>
-            <Definition value={critDamage - sheetDamage} />
+            <Definition value={critDamage} />
             <dt>Attack Speed</dt>
-            <Definition value={attackSpeed - sheetDamage} />
+            <Definition value={attackSpeed} />
             <dt>Passive Damage</dt>
-            <Definition value={passiveDamage - sheetDamage} />
+            <Definition value={passiveDamage} />
             <dt>&times; Elemental</dt>
-            <Definition value={elementalDamage - sheetElementalDamage} />
+            <Definition value={elementalDamage} />
             <dt>&times; Elite</dt>
-            <Definition value={eliteDamage - eliteElementalDamage} />
+            <Definition value={eliteDamage} />
           </dl>
         </Panel>
       </div>

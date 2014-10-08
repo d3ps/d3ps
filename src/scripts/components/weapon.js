@@ -19,7 +19,7 @@ var Weapon = React.createClass({
             <input type="text" id={'weapon' + this.props.number + 'AttacksPerSecond'} value={this.props.attacksPerSecond} className="form-control" />
           </FormGroup>
           <FormGroup label="Damage per Second">
-            <FormControlStatic value={this.props.dps} precision="1" />
+            <FormControlStatic value={this.props.dps} precision="1" name={'weapon' + this.props.number} />
           </FormGroup>
         </Panel>
       </div>
